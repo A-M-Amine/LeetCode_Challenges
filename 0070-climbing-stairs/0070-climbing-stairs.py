@@ -1,8 +1,10 @@
 class Solution:
     def climbStairs(self, n: int) -> int:
-        dp = [0, 1]
-        
-        for i in range(2, n+2):
-            dp.append(dp[i-2] + dp[i-1])
-            
-        return dp[n+1]
+        def climb(n):
+            if n in bank:
+                return bank[n]
+            else:
+                bank[n] = climb(n-1) + climb(n-2)
+                return bank[n]
+        bank = {1:1, 2:2}
+        return climb(n)
