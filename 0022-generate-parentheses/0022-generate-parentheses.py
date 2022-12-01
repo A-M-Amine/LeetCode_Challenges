@@ -1,22 +1,38 @@
 class Solution:
     def generateParenthesis(self, n: int) -> List[str]:
-            rv = []
-            stack = [("(",n-1,n)]
+        outcomes = {"()"}
 
-            while stack:
-                item = stack.pop()
 
-                s = item[0]
-                o = item[1]
-                c = item[2]
+        if n == 1:
+            return list(outcomes)
 
-                if o == 0 and c == 0:
-                    rv.append(s)
-                else:
-                    if o != 0:
-                        stack.append([s+"(",o-1,c])
+        for k in range(1, n):
 
-                    if o < c:
-                        stack.append([s+")",o,c-1])
+            res = set()
 
-            return rv
+            for j in outcomes:
+
+                for i in range(k + 1):
+
+                    combo = insert(j, i, "()")
+
+                    res.add(combo)
+
+            outcomes = res
+
+
+        return outcomes
+
+
+
+
+
+
+def insert(text, pos, obj):
+
+    if int(len(text) / 2) == pos or pos < len(text):
+        text = text[:pos] + obj + text[pos:]
+        return text
+    
+    text = text + obj
+    return text
